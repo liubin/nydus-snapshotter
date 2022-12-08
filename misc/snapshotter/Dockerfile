@@ -7,13 +7,13 @@ RUN export NYDUS_VERSION=$(curl --silent "https://api.github.com/repos/dragonfly
     tar xzf nydus-static-$NYDUS_VERSION-linux-amd64.tgz
 RUN mv nydus-static/* /
 
-FROM ubuntu:20.04
+FROM alpine:3.17.0
 
 WORKDIR /root/
 
-RUN apt update && \
-    apt install --no-install-recommends -y ca-certificates && \
-    rm -rf /var/cache/apt/* /var/lib/apt/lists/*
+# RUN apt update && \
+#     apt install --no-install-recommends -y ca-certificates && \
+#     rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
 VOLUME /var/lib/containerd-nydus /run/containerd-nydus
 

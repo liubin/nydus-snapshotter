@@ -12,6 +12,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/containerd/containerd/log"
 	"github.com/containerd/containerd/reference/docker"
 	"github.com/containerd/nydus-snapshotter/pkg/auth"
 	"github.com/containerd/nydus-snapshotter/pkg/utils/transport"
@@ -42,7 +43,10 @@ func (r *Resolver) Resolve(ref, digest string, labels map[string]string) (io.Rea
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to parse ref %q (%q)", sref, digest)
 	}
+	log.L.Errorf("Resolve host %+v", host)
+
 	keychain := auth.GetRegistryKeyChain(host, labels)
+	log.L.Errorf("Resolve keychain %+v", keychain)
 
 	var tr http.RoundTripper
 	url, tr, err := r.res.Resolve(nref, digest, keychain)

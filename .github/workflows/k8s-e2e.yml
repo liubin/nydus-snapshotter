@@ -3,7 +3,7 @@ name: E2E Test With Kubernetes
 on:
   push:
     branches:
-      - "main"
+      - "debug-state-dir"
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
   pull_request:
@@ -124,7 +124,7 @@ jobs:
           kubectl wait po test-pod --for=condition=ready --timeout=1m
           kubectl delete -f tests/e2e/k8s/test-pod.yaml
       - name: Dump logs
-        if: failure()
+        if: always()
         continue-on-error: true
         run: |
           log_dir="/tmp/nydus-log"
@@ -148,7 +148,7 @@ jobs:
           cat ~/.docker/config.json > $log_dir/docker.config.json || echo "~/.docker/config.json  not found"
       - name: Upload Logs
         uses: actions/upload-artifact@v3
-        if: failure()
+        if: always()
         with:
           name: k8s-e2e-tests-logs
           path: |

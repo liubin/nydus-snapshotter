@@ -61,7 +61,7 @@ spec:
       - containerd-nydus-grpc
       - --nydusd-path /usr/local/bin/nydusd
       - --config-path /etc/nydus/config.json
-      - --root /var/lib/containerd-nydus
+      - --root /var/lib/containerd/io.containerd.snapshotter.v1.nydus
       - --address /run/containerd-nydus/containerd-nydus-grpc.sock
       - --log-level debug
       - --daemon-mode shared
@@ -72,7 +72,7 @@ spec:
     volumeMounts:
     - mountPath: /etc/nydus/
       name: config
-    - mountPath: /var/lib/containerd-nydus
+    - mountPath: /var/lib/containerd/io.containerd.snapshotter.v1.nydus
       mountPropagation: Bidirectional
       name: nydus-lib
     - mountPath: /run/containerd-nydus
@@ -95,7 +95,7 @@ spec:
       type: DirectoryOrCreate
     name: nydus-run
   - hostPath:
-      path: /var/lib/containerd-nydus
+      path: /var/lib/containerd/io.containerd.snapshotter.v1.nydus
       type: DirectoryOrCreate
     name: nydus-lib
   - hostPath:
